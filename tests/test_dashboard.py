@@ -21,6 +21,15 @@ class DashboardSmokeTests(unittest.TestCase):
         self.assertNotIn("Rekap leads", json.dumps(data, ensure_ascii=False))
         self.assertNotIn("leads", html.lower())
 
+    def test_evaluation_is_split_into_people_and_event(self):
+        data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertEqual(set(data["evaluation"].keys()), {"people", "event"})
+        self.assertIn('id="people-evaluation"', html)
+        self.assertIn('id="event-evaluation"', html)
+        self.assertNotIn("Yang terlihat berhasil", html)
+        self.assertNotIn("Peluang berikutnya", html)
+
     def test_page_exposes_filters_charts_table_and_placeholder_notice(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for expected in (

@@ -37,8 +37,18 @@
     { "period": "Pasca-acara", "date": "Setelah acara", "title": "Bagikan momen & hasil", "description": "Cerita pasca-event dan ajakan untuk terhubung.", "channel": "Mitra & komunitas", "icon": "03" }
   ],
   "evaluation": {
-    "wins": ["Aktivasi hari-H menjadi titik interaksi langsung dengan peserta.", "Konten pasca-acara menjaga percakapan setelah race selesai."],
-    "opportunities": ["Tambahkan pengukuran brand recall sebelum dan sesudah acara.", "Gunakan tautan atau QR khusus untuk mengukur interaksi dan minat peserta."]
+    "people": [
+      { "label": "Kecukupan jumlah personel", "status": "Belum dievaluasi", "note": "Isi berdasarkan kebutuhan operasional dan jumlah petugas yang hadir." },
+      { "label": "Kejelasan pembagian tugas", "status": "Belum dievaluasi", "note": "Catat apakah PIC dan alur koordinasi dipahami oleh tim." },
+      { "label": "Ketepatan waktu & kedisiplinan", "status": "Belum dievaluasi", "note": "Isi setelah mencocokkan jadwal dan kehadiran aktual." },
+      { "label": "Koordinasi & komunikasi", "status": "Belum dievaluasi", "note": "Tambahkan contoh kendala, respons tim, dan hal yang berjalan baik." }
+    ],
+    "event": [
+      { "label": "Kesiapan race timing system", "status": "Belum dievaluasi", "note": "Catat hasil pengecekan perangkat, jaringan, dan konfigurasi sebelum start." },
+      { "label": "Kelancaran proses timing", "status": "Belum dievaluasi", "note": "Isi berdasarkan log pembacaan RFID, pencatatan waktu, dan insiden." },
+      { "label": "Ketepatan & kelengkapan hasil", "status": "Belum dievaluasi", "note": "Cocokkan hasil timing dengan validasi panitia atau data pembanding." },
+      { "label": "Penanganan kendala & pengalaman peserta", "status": "Belum dievaluasi", "note": "Ringkas insiden, waktu penyelesaian, dan masukan peserta/panitia." }
+    ]
   },
   "nextSteps": [
     { "number": "01", "title": "Ukur brand recall", "description": "Bandingkan awareness sebelum dan sesudah event." },

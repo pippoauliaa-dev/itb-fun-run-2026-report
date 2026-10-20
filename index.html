@@ -88,14 +88,17 @@
     .activity p { max-width: 285px; margin: 0; color: var(--secondary); font-size: 11px; line-height: 1.55; }
     .channel-tag { display: inline-flex; margin-top: 11px; padding: 5px 8px; border-radius: 6px; background: var(--surface-soft); color: var(--secondary); font-size: 10px; }
     .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .evaluation-note-top { margin: 12px 20px 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
     .insight { padding: 19px 20px 17px; }
     .insight-title { display: flex; align-items: center; gap: 8px; margin: 0 0 13px; font-size: 13px; }
     .insight-title span { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 8px; background: var(--mint); color: var(--green-dark); }
     .insight.opportunity .insight-title span { background: #fff0e8; color: #a84a22; }
-    .insight ul { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
-    .insight li { display: grid; grid-template-columns: 6px 1fr; gap: 8px; color: var(--secondary); font-size: 11px; line-height: 1.5; }
-    .insight li::before { content: ""; width: 5px; height: 5px; margin-top: 5px; border-radius: 50%; background: var(--green); }
-    .opportunity li::before { background: var(--orange); }
+    .evaluation-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    .evaluation-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; padding: 10px 11px; border: 1px solid var(--border); border-radius: 9px; }
+    .evaluation-label { font-size: 11px; font-weight: 650; }
+    .evaluation-status { align-self: start; padding: 4px 7px; border-radius: 6px; background: #f1f2ef; color: var(--secondary); font-size: 9px; white-space: nowrap; }
+    .evaluation-note { grid-column: 1 / -1; color: var(--secondary); font-size: 10px; line-height: 1.45; }
+    .evaluation-empty { color: var(--muted); font-size: 11px; }
     .next-card { margin-top: 14px; padding: 19px 21px 20px; }
     .next-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
     .next-head h2 { margin: 0; font-size: 15px; }
@@ -202,9 +205,9 @@
       <div class="activity-line" id="activity-line"></div>
     </section>
 
-    <section class="insight-grid" aria-label="Evaluasi aktivitas">
-      <article class="card insight"><h2 class="insight-title"><span aria-hidden="true">↗</span> Yang terlihat berhasil</h2><ul id="wins-list"></ul></article>
-      <article class="card insight opportunity"><h2 class="insight-title"><span aria-hidden="true">＋</span> Peluang berikutnya</h2><ul id="opportunities-list"></ul></article>
+    <section class="insight-grid" aria-label="Evaluasi SDM dan acara">
+      <article class="card insight"><h2 class="insight-title"><span aria-hidden="true">♙</span> Evaluasi SDM</h2><p class="card-sub">Kinerja tim penyedia race timing system</p><ul class="evaluation-list" id="people-evaluation"></ul></article>
+      <article class="card insight"><h2 class="insight-title"><span aria-hidden="true">◎</span> Evaluasi acara</h2><p class="card-sub">Kesiapan, pelaksanaan, dan hasil operasional</p><ul class="evaluation-list" id="event-evaluation"></ul></article>
     </section>
 
     <section class="card next-card" aria-labelledby="next-title">
@@ -432,10 +435,17 @@
         if (!line.children.length) line.append(text('p', 'Belum ada aktivitas untuk filter ini.', 'empty'));
       }
 
-      function renderBullets(target, items) {
+      function renderEvaluation(target, items) {
         const list = $(target);
         list.replaceChildren();
-        items.forEach((item) => list.append(text('li', item)));
+        items.forEach((item) => {
+          const row = text('li', '', 'evaluation-row');
+          row.append(text('span', item.label, 'evaluation-label'));
+          row.append(text('span', item.status || 'Belum dievaluasi', 'evaluation-status'));
+          row.append(text('span', item.note, 'evaluation-note'));
+          list.append(row);
+        });
+        if (!items.length) list.append(text('li', 'Belum ada catatan evaluasi.', 'evaluation-empty'));
       }
 
       function renderNext() {
@@ -456,8 +466,8 @@
         renderAwareness();
         renderEngagement();
         renderActivities();
-        renderBullets('wins-list', data.evaluation.wins);
-        renderBullets('opportunities-list', data.evaluation.opportunities);
+        renderEvaluation('people-evaluation', data.evaluation.people || []);
+        renderEvaluation('event-evaluation', data.evaluation.event || []);
         renderNext();
         const period = selectedPeriod();
         const channel = selectedChannel();

@@ -20,7 +20,8 @@ Edit `data.json`; struktur ringkas:
 - `awareness`: jangkauan dan impresi menurut `channel` dan `period`.
 - `engagement`: interaksi menurut `channel` dan `period`.
 - `activities`: aktivitas pada tiap tahap acara.
-- `evaluation`: poin evaluasi berbasis temuan.
+- `evaluation.people`: evaluasi SDM (jumlah personel, pembagian tugas, kedisiplinan, koordinasi).
+- `evaluation.event`: evaluasi operasional acara (kesiapan sistem, kelancaran timing, validasi hasil, penanganan kendala). Status dan catatan masih placeholder; ganti dengan evaluasi aktual.
 - `nextSteps`: rekomendasi tindak lanjut.
 - `sources`, `periodLabel`: catatan sumber dan periode.
 - `isIllustrative`: ubah ke `false` hanya setelah angka dan copy contoh diganti dengan data yang tervalidasi. Jika `true`, banner data ilustrasi ditampilkan.
