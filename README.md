@@ -20,8 +20,8 @@ Edit `data.json`; struktur ringkas:
 - `awareness`: jangkauan dan impresi menurut `channel` dan `period`.
 - `engagement`: interaksi menurut `channel` dan `period`.
 - `activities`: aktivitas pada tiap tahap acara.
-- `evaluation.people`: evaluasi SDM (jumlah personel, pembagian tugas, kedisiplinan, koordinasi).
-- `evaluation.event`: evaluasi operasional acara (kesiapan sistem, kelancaran timing, validasi hasil, penanganan kendala). Status dan catatan masih placeholder; ganti dengan evaluasi aktual.
+- `evaluation.people`: evaluasi SDM berdasarkan catatan event (kejelasan penjelasan RFID, backup/perangkat, waktu dan koordinasi). Beberapa konteks masih ditandai perlu konfirmasi.
+- `evaluation.event`: evaluasi acara/output (subtitle video, QR dan kunjungan website, monitor bib, materi visual). Frasa samar ditandai untuk konfirmasi; isi bukan klaim hasil teknis race timing.
 - `nextSteps`: rekomendasi tindak lanjut.
 - `sources`, `periodLabel`: catatan sumber dan periode.
 - `isIllustrative`: ubah ke `false` hanya setelah angka dan copy contoh diganti dengan data yang tervalidasi. Jika `true`, banner data ilustrasi ditampilkan.

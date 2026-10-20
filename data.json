@@ -38,16 +38,15 @@
   ],
   "evaluation": {
     "people": [
-      { "label": "Kecukupan jumlah personel", "status": "Belum dievaluasi", "note": "Isi berdasarkan kebutuhan operasional dan jumlah petugas yang hadir." },
-      { "label": "Kejelasan pembagian tugas", "status": "Belum dievaluasi", "note": "Catat apakah PIC dan alur koordinasi dipahami oleh tim." },
-      { "label": "Ketepatan waktu & kedisiplinan", "status": "Belum dievaluasi", "note": "Isi setelah mencocokkan jadwal dan kehadiran aktual." },
-      { "label": "Koordinasi & komunikasi", "status": "Belum dievaluasi", "note": "Tambahkan contoh kendala, respons tim, dan hal yang berjalan baik." }
+      { "label": "Penjelasan tentang RFID", "status": "Perlu diperjelas", "note": "Catatan: penjelasan dinilai kurang sederhana dan kurang menjelaskan cara kerja RFID." },
+      { "label": "Kesiapan backup dan perangkat", "status": "Perlu ditinjau", "note": "Catatan menyebut memory HP belum di-backup dan perangkat tunggal; konteks teknisnya perlu dikonfirmasi." },
+      { "label": "Pengelolaan waktu dan koordinasi", "status": "Perlu dikonfirmasi", "note": "Catatan menyebut waktu dan koordinasi/approach, tetapi detail evaluasinya kurang terbaca." }
     ],
     "event": [
-      { "label": "Kesiapan race timing system", "status": "Belum dievaluasi", "note": "Catat hasil pengecekan perangkat, jaringan, dan konfigurasi sebelum start." },
-      { "label": "Kelancaran proses timing", "status": "Belum dievaluasi", "note": "Isi berdasarkan log pembacaan RFID, pencatatan waktu, dan insiden." },
-      { "label": "Ketepatan & kelengkapan hasil", "status": "Belum dievaluasi", "note": "Cocokkan hasil timing dengan validasi panitia atau data pembanding." },
-      { "label": "Penanganan kendala & pengalaman peserta", "status": "Belum dievaluasi", "note": "Ringkas insiden, waktu penyelesaian, dan masukan peserta/panitia." }
+      { "label": "Subtitle pada video", "status": "Perlu ditambahkan", "note": "Catatan menyarankan subtitle pada video." },
+      { "label": "QR code dan kunjungan website", "status": "Perlu ditingkatkan", "note": "Catatan menyebut QR code kurang dan mengarah pada kebutuhan meningkatkan kunjungan ke website." },
+      { "label": "Monitor informasi bib", "status": "Perlu dikonfirmasi", "note": "Ada catatan monitor standby dengan teks ‘check your bib here’; konteks pelaksanaan/temuannya belum jelas." },
+      { "label": "Materi visual di area acara", "status": "Perlu ditinjau", "note": "Catatan menyebut background RFID kecil dan banner; tulisan lanjutan pada catatan banner kurang terbaca." }
     ]
   },
   "nextSteps": [
