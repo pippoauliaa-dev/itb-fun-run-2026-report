@@ -32,7 +32,7 @@ class DashboardSmokeTests(unittest.TestCase):
         self.assertTrue(all(item["status"] != "Belum dievaluasi" for group in data["evaluation"].values() for item in group))
         self.assertIn('id="people-evaluation"', html)
         self.assertIn('id="event-evaluation"', html)
-        self.assertLess(html.index('aria-label="Evaluasi SDM dan acara"'), html.index('id="activity-title"'))
+        self.assertLess(html.index('aria-label="Evaluasi SDM dan acara"'), html.index('id="awareness-title"'))
         self.assertNotIn("Yang terlihat berhasil", html)
         self.assertNotIn("Peluang berikutnya", html)
 
