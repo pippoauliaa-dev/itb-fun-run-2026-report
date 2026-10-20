@@ -1,0 +1,51 @@
+{
+  "event": "ITB Fun Run 2026",
+  "brand": "RFID Total Solution",
+  "role": "Race Timing System Partner",
+  "periodLabel": "Contoh tampilan · ganti dengan data aktual",
+  "isIllustrative": true,
+  "kpis": [
+    { "id": "reach", "label": "Orang terjangkau", "value": 12400, "unit": "orang", "change": 18, "changeLabel": "vs. periode sebelumnya", "icon": "◌" },
+    { "id": "engagement", "label": "Total interaksi", "value": 1860, "unit": "interaksi", "change": 24, "changeLabel": "vs. periode sebelumnya", "icon": "↗" },
+    { "id": "participation", "label": "Aktivasi peserta", "value": 324, "unit": "partisipasi", "change": null, "changeLabel": "aktivitas hari-H", "icon": "◎" },
+    { "id": "leads", "label": "Leads terkumpul", "value": 86, "unit": "leads", "change": null, "changeLabel": "perlu tindak lanjut", "icon": "✳" }
+  ],
+  "awareness": [
+    { "channel": "Instagram", "period": "Pra-acara", "reach": 4200, "impressions": 6800 },
+    { "channel": "Instagram", "period": "Hari-H", "reach": 5100, "impressions": 8700 },
+    { "channel": "Instagram", "period": "Pasca-acara", "reach": 3100, "impressions": 4900 },
+    { "channel": "Aktivasi acara", "period": "Pra-acara", "reach": 900, "impressions": 1400 },
+    { "channel": "Aktivasi acara", "period": "Hari-H", "reach": 2400, "impressions": 3200 },
+    { "channel": "Aktivasi acara", "period": "Pasca-acara", "reach": 600, "impressions": 900 },
+    { "channel": "Mitra & komunitas", "period": "Pra-acara", "reach": 1300, "impressions": 1800 },
+    { "channel": "Mitra & komunitas", "period": "Hari-H", "reach": 1900, "impressions": 2700 },
+    { "channel": "Mitra & komunitas", "period": "Pasca-acara", "reach": 1100, "impressions": 1600 }
+  ],
+  "engagement": [
+    { "channel": "Instagram", "period": "Pra-acara", "interactions": 280 },
+    { "channel": "Instagram", "period": "Hari-H", "interactions": 510 },
+    { "channel": "Instagram", "period": "Pasca-acara", "interactions": 390 },
+    { "channel": "Aktivasi acara", "period": "Pra-acara", "interactions": 35 },
+    { "channel": "Aktivasi acara", "period": "Hari-H", "interactions": 324 },
+    { "channel": "Aktivasi acara", "period": "Pasca-acara", "interactions": 52 },
+    { "channel": "Mitra & komunitas", "period": "Pra-acara", "interactions": 92 },
+    { "channel": "Mitra & komunitas", "period": "Hari-H", "interactions": 120 },
+    { "channel": "Mitra & komunitas", "period": "Pasca-acara", "interactions": 57 }
+  ],
+  "activities": [
+    { "period": "Pra-acara", "date": "Sebelum acara", "title": "Kenalkan race timing", "description": "Konten pengantar tentang teknologi dan pengalaman lomba.", "channel": "Instagram", "icon": "01" },
+    { "period": "Hari-H", "date": "Hari pelaksanaan", "title": "Hadir di garis start & finish", "description": "Dokumentasi sistem timing dan interaksi dengan peserta.", "channel": "Aktivasi acara", "icon": "02" },
+    { "period": "Pasca-acara", "date": "Setelah acara", "title": "Bagikan momen & hasil", "description": "Cerita pasca-event dan ajakan untuk terhubung.", "channel": "Mitra & komunitas", "icon": "03" }
+  ],
+  "evaluation": {
+    "wins": ["Aktivasi hari-H menjadi titik interaksi langsung dengan peserta.", "Konten pasca-acara menjaga percakapan setelah race selesai."],
+    "opportunities": ["Tambahkan pengukuran brand recall sebelum dan sesudah acara.", "Gunakan QR/CTA khusus untuk melacak minat dan tindak lanjut leads."]
+  },
+  "nextSteps": [
+    { "number": "01", "title": "Ukur brand recall", "description": "Bandingkan awareness sebelum dan sesudah event." },
+    { "number": "02", "title": "Optimalkan CTA", "description": "Hubungkan interaksi ke landing page atau kontak sales." },
+    { "number": "03", "title": "Rawat komunitas", "description": "Lanjutkan konten dan follow-up setelah race." }
+  ],
+  "sources": ["Insight media sosial", "Log aktivitas acara", "Rekap leads"],
+  "periods": ["Pra-acara", "Hari-H", "Pasca-acara"]
+}
