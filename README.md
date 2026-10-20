@@ -25,7 +25,7 @@ Edit `data.json`; struktur ringkas:
 - `sources`, `periodLabel`: catatan sumber dan periode.
 - `isIllustrative`: ubah ke `false` hanya setelah angka dan copy contoh diganti dengan data yang tervalidasi. Jika `true`, banner data ilustrasi ditampilkan.
 
-Periode pada data grafis harus konsisten dengan daftar `periods`. Metrik jangkauan, impresi, interaksi, partisipasi, dan leads punya definisi masing-masing—jangan dijumlahkan menjadi satu angka tanpa dasar yang jelas. Jangan gunakan jangkauan sebagai pengganti brand recall.
+Periode pada data grafis harus konsisten dengan daftar `periods`. Jangkauan, impresi, interaksi, dan partisipasi punya definisi masing-masing—jangan dijumlahkan menjadi satu angka tanpa dasar yang jelas. Jangan gunakan jangkauan sebagai pengganti brand recall.
 
 ## Publikasikan lewat GitHub Pages
 

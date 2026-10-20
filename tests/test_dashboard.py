@@ -13,6 +13,14 @@ class DashboardSmokeTests(unittest.TestCase):
         self.assertTrue(data["isIllustrative"])
         self.assertTrue(all(kpi["value"] is None or data["isIllustrative"] for kpi in data["kpis"]))
 
+    def test_report_focuses_on_awareness_and_engagement_not_leads(self):
+        data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertEqual([kpi["id"] for kpi in data["kpis"]], ["reach", "engagement", "participation"])
+        self.assertNotIn("Leads terkumpul", json.dumps(data, ensure_ascii=False))
+        self.assertNotIn("Rekap leads", json.dumps(data, ensure_ascii=False))
+        self.assertNotIn("leads", html.lower())
+
     def test_page_exposes_filters_charts_table_and_placeholder_notice(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for expected in (

@@ -7,8 +7,7 @@
   "kpis": [
     { "id": "reach", "label": "Orang terjangkau", "value": 12400, "unit": "orang", "change": 18, "changeLabel": "vs. periode sebelumnya", "icon": "◌" },
     { "id": "engagement", "label": "Total interaksi", "value": 1860, "unit": "interaksi", "change": 24, "changeLabel": "vs. periode sebelumnya", "icon": "↗" },
-    { "id": "participation", "label": "Aktivasi peserta", "value": 324, "unit": "partisipasi", "change": null, "changeLabel": "aktivitas hari-H", "icon": "◎" },
-    { "id": "leads", "label": "Leads terkumpul", "value": 86, "unit": "leads", "change": null, "changeLabel": "perlu tindak lanjut", "icon": "✳" }
+    { "id": "participation", "label": "Aktivasi peserta", "value": 324, "unit": "partisipasi", "change": null, "changeLabel": "aktivitas hari-H", "icon": "◎" }
   ],
   "awareness": [
     { "channel": "Instagram", "period": "Pra-acara", "reach": 4200, "impressions": 6800 },
@@ -39,13 +38,13 @@
   ],
   "evaluation": {
     "wins": ["Aktivasi hari-H menjadi titik interaksi langsung dengan peserta.", "Konten pasca-acara menjaga percakapan setelah race selesai."],
-    "opportunities": ["Tambahkan pengukuran brand recall sebelum dan sesudah acara.", "Gunakan QR/CTA khusus untuk melacak minat dan tindak lanjut leads."]
+    "opportunities": ["Tambahkan pengukuran brand recall sebelum dan sesudah acara.", "Gunakan tautan atau QR khusus untuk mengukur interaksi dan minat peserta."]
   },
   "nextSteps": [
     { "number": "01", "title": "Ukur brand recall", "description": "Bandingkan awareness sebelum dan sesudah event." },
     { "number": "02", "title": "Optimalkan CTA", "description": "Hubungkan interaksi ke landing page atau kontak sales." },
     { "number": "03", "title": "Rawat komunitas", "description": "Lanjutkan konten dan follow-up setelah race." }
   ],
-  "sources": ["Insight media sosial", "Log aktivitas acara", "Rekap leads"],
+  "sources": ["Insight media sosial", "Log aktivitas acara"],
   "periods": ["Pra-acara", "Hari-H", "Pasca-acara"]
 }
