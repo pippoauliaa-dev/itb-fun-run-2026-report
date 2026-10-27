@@ -96,6 +96,32 @@
     .search-table a:hover { text-decoration: underline; }
     .search-notes { margin: 12px 20px 0; color: var(--secondary); font-size: 10px; line-height: 1.6; }
     .search-notes li { margin: 3px 0; }
+    .comparison-card { margin-top: 14px; padding: 19px 21px 20px; }
+    .comparison-controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 16px 20px 0; }
+    .comparison-actions { display: flex; gap: 7px; }
+    .comparison-chart-wrap { padding: 12px 20px 4px; }
+    .comparison-chart-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .comparison-metric { min-width: 0; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+    .comparison-metric h3 { margin: 0 0 4px; font-size: 12px; line-height: 1.35; }
+    .comparison-metric-scale { margin: 0 0 16px; color: var(--muted); font-size: 10px; }
+    .comparison-metric-values { display: grid; gap: 10px; }
+    .comparison-metric-value { display: grid; grid-template-columns: 57px minmax(0, 1fr) 40px; align-items: center; gap: 8px; color: var(--secondary); font-size: 10px; }
+    .comparison-metric-value strong { color: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
+    .comparison-meter { height: 9px; overflow: hidden; border-radius: 99px; background: var(--surface-soft); }
+    .comparison-meter-fill { height: 100%; min-width: 2px; border-radius: inherit; }
+    .comparison-meter-fill.pre { background: var(--green); }
+    .comparison-meter-fill.post { background: var(--blue); }
+    .comparison-chart-grid [data-tooltip] { cursor: help; }
+    @media (max-width: 760px) { .comparison-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 480px) { .comparison-chart-grid { grid-template-columns: 1fr; } }
+    .comparison-legend { display: flex; gap: 14px; flex-wrap: wrap; color: var(--secondary); font-size: 11px; }
+    .comparison-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .comparison-legend i { width: 9px; height: 9px; display: inline-block; border-radius: 3px; }
+    .comparison-table-wrap { display: none; padding: 0 20px 14px; overflow-x: auto; }
+    .comparison-table-wrap.visible { display: block; }
+    .comparison-table { min-width: 680px; }
+    .comparison-note { margin: 12px 20px 0; color: var(--secondary); font-size: 11px; line-height: 1.55; }
+    .comparison-table-toggle { border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; color: var(--secondary); background: var(--surface); font-size: 11px; cursor: pointer; }
     .main-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, .9fr); gap: 14px; margin-top: 14px; }
     .hero-note { display: none; }
     .hero { grid-template-columns: 1fr; padding-bottom: 20px; }
@@ -229,6 +255,13 @@
       .search-table { min-width: 440px; }
       .search-notes { margin-right: 12px; margin-left: 12px; }
       .search-device-card { margin-right: 12px; margin-left: 12px; overflow-x: auto; }
+      .comparison-card { padding: 16px 12px 17px; }
+      .comparison-controls { margin-right: 8px; margin-left: 8px; }
+      .comparison-actions { flex-wrap: wrap; justify-content: flex-end; }
+      .comparison-chart-wrap { padding-right: 8px; padding-left: 8px; }
+      .comparison-metric { padding: 11px; }
+      .comparison-metric-value { grid-template-columns: 52px minmax(0, 1fr) 34px; gap: 6px; }
+      .comparison-note { margin-right: 8px; margin-left: 8px; }
       .kpi { min-height: 135px; padding: 14px; border-radius: 12px; }
       .kpi-top { font-size: 10px; }
       .kpi-icon { width: 26px; height: 26px; }
@@ -285,6 +318,14 @@
       </div>
       <article class="search-table-card search-device-card"><h3>Perangkat · perbandingan klik dan tayangan</h3><div id="search-device-table"></div></article>
       <ul class="search-notes" id="search-notes"></ul>
+    </section>
+
+    <section class="card comparison-card" id="account-comparison" aria-labelledby="comparison-title">
+      <div class="card-head"><div><h2 id="comparison-title">Perbandingan Instagram sebelum dan sesudah acara</h2><p class="card-sub" id="comparison-periods"></p></div></div>
+      <div class="comparison-controls"><div class="comparison-legend" aria-label="Legenda periode"><span><i style="background:var(--green)"></i>Pra-acara</span><span><i style="background:var(--blue)"></i>Pasca-acara</span></div><div class="comparison-actions"><button class="comparison-table-toggle" type="button" id="comparison-chart-toggle" aria-expanded="true">Sembunyikan grafik</button><button class="comparison-table-toggle" type="button" id="comparison-table-toggle" aria-expanded="false">Lihat tabel data</button></div></div>
+      <div class="comparison-chart-wrap visible" id="comparison-chart-wrap"><div class="comparison-chart" id="comparison-chart" role="group" aria-label="Perbandingan rerata harian akun sebelum dan setelah acara"></div></div>
+      <div class="comparison-table-wrap" id="comparison-table"></div>
+      <p class="comparison-note" id="comparison-note"></p>
     </section>
 
     <section class="insight-grid" aria-label="Evaluasi SDM dan acara">
@@ -752,6 +793,7 @@
 
       function render() {
         renderSearchPerformance();
+        renderAccountComparison();
         renderEvaluation('people-evaluation', data.evaluation.people || []);
         renderEvaluation('event-evaluation', data.evaluation.event || []);
         $('period-label').textContent = data.periodLabel || 'Google Search Console';

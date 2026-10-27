@@ -4,6 +4,33 @@
   "role": "Race Timing System Partner",
   "periodLabel": "Google Search Console · 1–27 Oktober 2026",
   "isIllustrative": false,
+  "accountComparison": {
+    "eventDate": "2026-10-18",
+    "pre": {
+      "label": "Pra-acara",
+      "dateRange": "1–18 Oktober 2026",
+      "days": 18,
+      "views": 34939,
+      "accountsReached": 17614,
+      "nonFollowerShare": 93.8,
+      "netFollows": 16,
+      "profileVisits": 159,
+      "bioLinkTaps": 12,
+      "interactionsByContent": 28
+    },
+    "post": {
+      "label": "Pasca-acara",
+      "dateRange": "19–27 Oktober 2026",
+      "days": 9,
+      "views": 25922,
+      "accountsReached": 13570,
+      "nonFollowerShare": 93.4,
+      "netFollows": 11,
+      "profileVisits": 126,
+      "bioLinkTaps": 7,
+      "interactionsByContent": 45
+    }
+  },
   "searchPerformance": {
     "eventDate": "2026-10-18",
     "source": "Google Search Console",
