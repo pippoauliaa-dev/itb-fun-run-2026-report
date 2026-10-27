@@ -90,10 +90,21 @@
     .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
     .evaluation-note-top { margin: 12px 20px 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
     .comparison-card { margin-top: 14px; padding: 19px 21px 20px; }
-    .comparison-table-wrap { margin-top: 14px; overflow-x: auto; }
+    .comparison-controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 16px 20px 0; }
+    .comparison-chart-wrap { padding: 8px 16px 4px; }
+    .comparison-chart { display: block; width: 100%; height: auto; }
+    .comparison-chart text { font-family: inherit; fill: var(--secondary); font-size: 11px; }
+    .comparison-chart .comparison-value { font-weight: 650; }
+    .comparison-chart .gridline { stroke: var(--grid); stroke-width: 1; }
+    .comparison-chart .bar { rx: 4px; cursor: crosshair; }
+    .comparison-legend { display: flex; gap: 14px; flex-wrap: wrap; color: var(--secondary); font-size: 11px; }
+    .comparison-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .comparison-legend i { width: 9px; height: 9px; display: inline-block; border-radius: 3px; }
+    .comparison-table-wrap { display: none; padding: 0 20px 14px; overflow-x: auto; }
+    .comparison-table-wrap.visible { display: block; }
     .comparison-table { min-width: 680px; }
-    .comparison-note { margin: 12px 0 0; color: var(--secondary); font-size: 11px; line-height: 1.55; }
-    .comparison-period { color: var(--muted); font-size: 10px; }
+    .comparison-note { margin: 12px 20px 0; color: var(--secondary); font-size: 11px; line-height: 1.55; }
+    .comparison-table-toggle { border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; color: var(--secondary); background: var(--surface); font-size: 11px; cursor: pointer; }
     .insight { padding: 19px 20px 17px; }
     .insight-title { display: flex; align-items: center; gap: 8px; margin: 0 0 13px; font-size: 13px; }
     .insight-title span { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 8px; background: var(--mint); color: var(--green-dark); }
@@ -158,6 +169,11 @@
       .insight-grid { grid-template-columns: 1fr; gap: 10px; }
       .next-head { align-items: flex-start; flex-direction: column; }
       .next-grid { grid-template-columns: 1fr; gap: 8px; }
+      .comparison-card { padding: 16px 12px 17px; }
+      .comparison-controls { margin-right: 8px; margin-left: 8px; }
+      .comparison-chart-wrap { padding-right: 0; padding-left: 0; }
+      .comparison-chart text { font-size: 10px; }
+      .comparison-note { margin-right: 8px; margin-left: 8px; }
       .footer { flex-direction: column; gap: 4px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
@@ -194,6 +210,8 @@
 
     <section class="card comparison-card" id="account-comparison" aria-labelledby="comparison-title">
       <div class="card-head"><div><h2 id="comparison-title">Perbandingan Instagram sebelum dan sesudah acara</h2><p class="card-sub" id="comparison-periods"></p></div></div>
+      <div class="comparison-controls"><div class="comparison-legend" aria-label="Legenda periode"><span><i style="background:var(--green)"></i>Pra-acara</span><span><i style="background:var(--blue)"></i>Pasca-acara</span></div><button class="comparison-table-toggle" type="button" id="comparison-table-toggle" aria-expanded="false">Lihat tabel data</button></div>
+      <div class="comparison-chart-wrap" id="comparison-chart" role="img" aria-label="Perbandingan rerata harian akun sebelum dan setelah acara"></div>
       <div class="comparison-table-wrap" id="comparison-table"></div>
       <p class="comparison-note" id="comparison-note"></p>
     </section>
@@ -446,18 +464,104 @@
         if (!line.children.length) line.append(text('p', 'Belum ada aktivitas untuk filter ini.', 'empty'));
       }
 
+      function niceCeiling(value) {
+        const magnitude = 10 ** Math.floor(Math.log10(value || 1));
+        const fraction = value / magnitude;
+        const step = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 2.5 ? 2.5 : fraction <= 5 ? 5 : 10;
+        return step * magnitude;
+      }
+
+      function comparisonTicks(max) {
+        const divisor = 5;
+        const step = max / divisor;
+        const digits = step < 1 ? Math.min(2, Math.ceil(-Math.log10(step))) : 0;
+        return Array.from({ length: divisor + 1 }, (_, index) => Number((step * index).toFixed(digits)));
+      }
+
+      function formatDailyValue(value) {
+        return number.format(Number(value.toFixed(value < 10 ? 1 : 0)));
+      }
+
+      function comparisonChartSvg(rows, pre, post) {
+        const width = 720;
+        const rowHeight = 42;
+        const top = 12;
+        const height = top + rows.length * rowHeight + 22;
+        const left = 210;
+        const plotWidth = 390;
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        svg.setAttribute('class', 'comparison-chart');
+        svg.setAttribute('role', 'img');
+        svg.setAttribute('aria-label', 'Perbandingan rerata harian akun sebelum dan setelah acara. Skala batang dihitung terpisah untuk setiap metrik.');
+        rows.forEach(({ label, key }, index) => {
+          const rowY = top + index * rowHeight;
+          const rawMax = Math.max(pre[key] / pre.days, post[key] / post.days, 1);
+          const scaleMax = niceCeiling(rawMax);
+          const ticks = comparisonTicks(scaleMax);
+          const tickCount = ticks.length - 1;
+          const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          title.setAttribute('x', left - 12);
+          title.setAttribute('y', rowY + 18);
+          title.setAttribute('text-anchor', 'end');
+          title.textContent = label;
+          svg.append(title);
+          for (let tick = 0; tick <= tickCount; tick += 1) {
+            const x = left + plotWidth * tick / tickCount;
+            const gridline = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            gridline.setAttribute('class', 'gridline');
+            gridline.setAttribute('x1', x);
+            gridline.setAttribute('y1', rowY + 4);
+            gridline.setAttribute('x2', x);
+            gridline.setAttribute('y2', rowY + 32);
+            svg.append(gridline);
+            const tickLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            tickLabel.setAttribute('x', x);
+            tickLabel.setAttribute('y', rowY + 40);
+            tickLabel.setAttribute('text-anchor', 'middle');
+            tickLabel.textContent = number.format(ticks[tick]);
+            svg.append(tickLabel);
+          }
+          [[pre, pre.days, 'Pra-acara'], [post, post.days, 'Pasca-acara']].forEach(([period, days, periodLabel], series) => {
+            const value = period[key] / days;
+            const barWidth = value > 0 ? Math.max(2, value / scaleMax * plotWidth) : 0;
+            const y = rowY + 6 + series * 13;
+            const description = `${label} · ${periodLabel}: ${formatDailyValue(value)} per hari`;
+            const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            bar.setAttribute('class', 'bar');
+            bar.setAttribute('x', left);
+            bar.setAttribute('y', y);
+            bar.setAttribute('width', barWidth);
+            bar.setAttribute('height', 10);
+            bar.setAttribute('fill', series === 0 ? '#0c7d67' : '#2a78d6');
+            bar.setAttribute('tabindex', '0');
+            bar.setAttribute('role', 'img');
+            bar.setAttribute('aria-label', description);
+            bar.setAttribute('data-tooltip', description);
+            svg.append(bar);
+            const valueLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            valueLabel.setAttribute('class', 'comparison-value');
+            valueLabel.setAttribute('x', left + plotWidth + 8);
+            valueLabel.setAttribute('y', y + 9);
+            valueLabel.textContent = formatDailyValue(value);
+            svg.append(valueLabel);
+          });
+        });
+        return svg;
+      }
+
       function renderAccountComparison() {
         const comparison = data.accountComparison;
         if (!comparison) { $('account-comparison').hidden = true; return; }
         const { pre, post } = comparison;
         $('comparison-periods').textContent = `${pre.label} · ${pre.dateRange} (${pre.days} hari) dibanding ${post.label} · ${post.dateRange} (${post.days} hari)`;
         const rows = [
-          ['Tayangan', 'views'],
-          ['Pemirsa', 'accountsReached'],
-          ['Interaksi berdasarkan jenis konten', 'interactionsByContent'],
-          ['Kunjungan profil', 'profileVisits'],
-          ['Ketukan tautan bio', 'bioLinkTaps'],
-          ['Pengikut bersih', 'netFollows']
+          { label: 'Tayangan', key: 'views' },
+          { label: 'Pemirsa', key: 'accountsReached' },
+          { label: 'Interaksi berdasarkan jenis konten', key: 'interactionsByContent' },
+          { label: 'Kunjungan profil', key: 'profileVisits' },
+          { label: 'Ketukan tautan bio', key: 'bioLinkTaps' },
+          { label: 'Pengikut bersih', key: 'netFollows' }
         ];
         const table = document.createElement('table');
         table.className = 'comparison-table';
@@ -466,7 +570,7 @@
         ['Metrik', 'Pra-acara', 'Pasca-acara', 'Rerata/hari pra', 'Rerata/hari pasca'].forEach((value) => header.append(text('th', value)));
         thead.append(header);
         const tbody = document.createElement('tbody');
-        rows.forEach(([label, key]) => {
+        rows.forEach(({ label, key }) => {
           const row = document.createElement('tr');
           row.append(text('td', label));
           row.append(text('td', number.format(pre[key])));
@@ -484,7 +588,18 @@
         tbody.append(audienceRow);
         table.append(thead, tbody);
         $('comparison-table').replaceChildren(table);
-        $('comparison-note').textContent = `Periode pasca-acara lebih singkat; total yang lebih rendah tidak ditafsirkan sebagai penurunan kinerja. Rerata harian memberi konteks durasi, dan angka ini merupakan aktivitas akun agregat—bukan atribusi khusus kepada acara. Interaksi adalah penjumlahan Reels, Cerita, dan Postingan yang terlihat pada Insights; total kartu interaksi pra-acara tidak terbaca.`;
+        $('comparison-chart').replaceChildren(comparisonChartSvg(rows, pre, post));
+        $('comparison-chart').onpointermove = showTooltip;
+        $('comparison-chart').onpointerleave = () => $('chart-tooltip').classList.remove('visible');
+        $('comparison-chart').onfocusin = showTooltip;
+        $('comparison-chart').onfocusout = () => $('chart-tooltip').classList.remove('visible');
+        $('comparison-table-toggle').onclick = () => {
+          const tableWrap = $('comparison-table');
+          const isVisible = tableWrap.classList.toggle('visible');
+          $('comparison-table-toggle').setAttribute('aria-expanded', String(isVisible));
+          $('comparison-table-toggle').textContent = isVisible ? 'Sembunyikan tabel' : 'Lihat tabel data';
+        };
+        $('comparison-note').textContent = `Grafik menunjukkan rerata harian, bukan total periode, karena periode pasca-acara lebih singkat. Skala batang dihitung terpisah untuk setiap metrik; bandingkan nilai pra dan pasca di dalam baris yang sama, bukan panjang batang antarbaris. Total yang lebih rendah tidak ditafsirkan sebagai penurunan kinerja. Ini aktivitas akun agregat, bukan atribusi khusus kepada acara. Interaksi menjumlahkan Reels, Cerita, dan Postingan yang terlihat pada Insights; total kartu interaksi pra-acara tidak terbaca.`;
       }
 
       function renderEvaluation(target, items) {
