@@ -39,11 +39,10 @@ class DashboardSmokeTests(unittest.TestCase):
         self.assertIn('id="comparison-table"', html)
         self.assertIn("rerata harian", html.lower())
         self.assertIn("data-tooltip", html)
-        self.assertIn("const scaleMax = niceCeiling(rawMax)", html)
-        self.assertIn("Skala batang dihitung terpisah untuk setiap metrik", html)
-        self.assertIn("function comparisonTicks(max)", html)
-        self.assertIn("tickLabel.textContent = number.format(ticks[tick])", html)
-        self.assertNotIn("const maxValue = Math.max(...rows.map(({ key })", html)
+        self.assertIn("function comparisonChartGrid(rows, pre, post)", html)
+        self.assertIn("function comparisonMetric(label, key, pre, post)", html)
+        self.assertIn("bandingkan bar hanya di dalam kartu yang sama", html)
+        self.assertNotIn("function comparisonTicks(max)", html)
 
     def test_evaluation_is_split_into_people_and_event(self):
         data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
