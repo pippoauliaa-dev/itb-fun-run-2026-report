@@ -89,6 +89,11 @@
     .channel-tag { display: inline-flex; margin-top: 11px; padding: 5px 8px; border-radius: 6px; background: var(--surface-soft); color: var(--secondary); font-size: 10px; }
     .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
     .evaluation-note-top { margin: 12px 20px 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .comparison-card { margin-top: 14px; padding: 19px 21px 20px; }
+    .comparison-table-wrap { margin-top: 14px; overflow-x: auto; }
+    .comparison-table { min-width: 680px; }
+    .comparison-note { margin: 12px 0 0; color: var(--secondary); font-size: 11px; line-height: 1.55; }
+    .comparison-period { color: var(--muted); font-size: 10px; }
     .insight { padding: 19px 20px 17px; }
     .insight-title { display: flex; align-items: center; gap: 8px; margin: 0 0 13px; font-size: 13px; }
     .insight-title span { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 8px; background: var(--mint); color: var(--green-dark); }
@@ -174,7 +179,7 @@
       <aside class="hero-note"><b>Tujuan aktivitas</b><span>Bangun awareness dan engagement melalui pengalaman race timing di event.</span></aside>
     </section>
 
-    <div class="notice" id="illustration-notice" role="status"><span class="notice-icon" aria-hidden="true">ⓘ</span><span><strong>Data ilustrasi untuk contoh tampilan.</strong> Ganti isi <code>data.json</code> dengan hasil aktual sebelum report dibagikan.</span></div>
+    <div class="notice" id="illustration-notice" role="status"><span class="notice-icon" aria-hidden="true">ⓘ</span><span><strong>Data ilustrasi untuk contoh tampilan.</strong> KPI dan grafik kanal di bawah masih contoh; perbandingan Insights akun merupakan data aktual dari tangkapan layar.</span></div>
 
     <div class="filter-row" aria-label="Filter report">
       <span class="filter-label">Tampilkan</span>
@@ -186,6 +191,12 @@
     </div>
 
     <section class="kpi-grid" id="kpi-grid" aria-label="Ringkasan hasil"></section>
+
+    <section class="card comparison-card" id="account-comparison" aria-labelledby="comparison-title">
+      <div class="card-head"><div><h2 id="comparison-title">Perbandingan Instagram sebelum dan sesudah acara</h2><p class="card-sub" id="comparison-periods"></p></div></div>
+      <div class="comparison-table-wrap" id="comparison-table"></div>
+      <p class="comparison-note" id="comparison-note"></p>
+    </section>
 
     <section class="insight-grid" aria-label="Evaluasi SDM dan acara">
       <article class="card insight"><h2 class="insight-title"><span aria-hidden="true">♙</span> Evaluasi SDM</h2><p class="card-sub">Kinerja tim penyedia race timing system</p><ul class="evaluation-list" id="people-evaluation"></ul></article>
@@ -435,6 +446,47 @@
         if (!line.children.length) line.append(text('p', 'Belum ada aktivitas untuk filter ini.', 'empty'));
       }
 
+      function renderAccountComparison() {
+        const comparison = data.accountComparison;
+        if (!comparison) { $('account-comparison').hidden = true; return; }
+        const { pre, post } = comparison;
+        $('comparison-periods').textContent = `${pre.label} · ${pre.dateRange} (${pre.days} hari) dibanding ${post.label} · ${post.dateRange} (${post.days} hari)`;
+        const rows = [
+          ['Tayangan', 'views'],
+          ['Pemirsa', 'accountsReached'],
+          ['Interaksi berdasarkan jenis konten', 'interactionsByContent'],
+          ['Kunjungan profil', 'profileVisits'],
+          ['Ketukan tautan bio', 'bioLinkTaps'],
+          ['Pengikut bersih', 'netFollows']
+        ];
+        const table = document.createElement('table');
+        table.className = 'comparison-table';
+        const thead = document.createElement('thead');
+        const header = document.createElement('tr');
+        ['Metrik', 'Pra-acara', 'Pasca-acara', 'Rerata/hari pra', 'Rerata/hari pasca'].forEach((value) => header.append(text('th', value)));
+        thead.append(header);
+        const tbody = document.createElement('tbody');
+        rows.forEach(([label, key]) => {
+          const row = document.createElement('tr');
+          row.append(text('td', label));
+          row.append(text('td', number.format(pre[key])));
+          row.append(text('td', number.format(post[key])));
+          row.append(text('td', number.format(pre[key] / pre.days)));
+          row.append(text('td', number.format(post[key] / post.days)));
+          tbody.append(row);
+        });
+        const audienceRow = document.createElement('tr');
+        audienceRow.append(text('td', 'Proporsi pemirsa non-pengikut'));
+        audienceRow.append(text('td', `${number.format(pre.nonFollowerShare)}%`));
+        audienceRow.append(text('td', `${number.format(post.nonFollowerShare)}%`));
+        audienceRow.append(text('td', '—'));
+        audienceRow.append(text('td', '—'));
+        tbody.append(audienceRow);
+        table.append(thead, tbody);
+        $('comparison-table').replaceChildren(table);
+        $('comparison-note').textContent = `Periode pasca-acara lebih singkat; total yang lebih rendah tidak ditafsirkan sebagai penurunan kinerja. Rerata harian memberi konteks durasi, dan angka ini merupakan aktivitas akun agregat—bukan atribusi khusus kepada acara. Interaksi adalah penjumlahan Reels, Cerita, dan Postingan yang terlihat pada Insights; total kartu interaksi pra-acara tidak terbaca.`;
+      }
+
       function renderEvaluation(target, items) {
         const list = $(target);
         list.replaceChildren();
@@ -466,6 +518,7 @@
         renderAwareness();
         renderEngagement();
         renderActivities();
+        renderAccountComparison();
         renderEvaluation('people-evaluation', data.evaluation.people || []);
         renderEvaluation('event-evaluation', data.evaluation.event || []);
         renderNext();

@@ -21,6 +21,20 @@ class DashboardSmokeTests(unittest.TestCase):
         self.assertNotIn("Rekap leads", json.dumps(data, ensure_ascii=False))
         self.assertNotIn("leads", html.lower())
 
+    def test_account_comparison_reports_neutral_pre_and_post_event_insights(self):
+        data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        comparison = data["accountComparison"]
+        self.assertEqual(comparison["eventDate"], "2026-10-18")
+        self.assertEqual(comparison["pre"]["views"], 34939)
+        self.assertEqual(comparison["post"]["views"], 25922)
+        self.assertEqual(round(comparison["pre"]["views"] / comparison["pre"]["days"]), 1941)
+        self.assertEqual(round(comparison["post"]["views"] / comparison["post"]["days"]), 2880)
+        self.assertEqual(comparison["pre"]["interactionsByContent"], 28)
+        self.assertEqual(comparison["post"]["interactionsByContent"], 45)
+        self.assertIn('id="account-comparison"', html)
+        self.assertIn("periode pasca-acara lebih singkat", html.lower())
+
     def test_evaluation_is_split_into_people_and_event(self):
         data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
         html = (ROOT / "index.html").read_text(encoding="utf-8")
