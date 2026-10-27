@@ -2,40 +2,76 @@
   "event": "ITB Fun Run 2026",
   "brand": "RFID Total Solution",
   "role": "Race Timing System Partner",
-  "periodLabel": "Contoh tampilan · ganti dengan data aktual",
-  "isIllustrative": true,
-  "kpis": [
-    { "id": "reach", "label": "Orang terjangkau", "value": 12400, "unit": "orang", "change": 18, "changeLabel": "vs. periode sebelumnya", "icon": "◌" },
-    { "id": "engagement", "label": "Total interaksi", "value": 1860, "unit": "interaksi", "change": 24, "changeLabel": "vs. periode sebelumnya", "icon": "↗" },
-    { "id": "participation", "label": "Aktivasi peserta", "value": 324, "unit": "partisipasi", "change": null, "changeLabel": "aktivitas hari-H", "icon": "◎" }
-  ],
-  "awareness": [
-    { "channel": "Instagram", "period": "Pra-acara", "reach": 4200, "impressions": 6800 },
-    { "channel": "Instagram", "period": "Hari-H", "reach": 5100, "impressions": 8700 },
-    { "channel": "Instagram", "period": "Pasca-acara", "reach": 3100, "impressions": 4900 },
-    { "channel": "Aktivasi acara", "period": "Pra-acara", "reach": 900, "impressions": 1400 },
-    { "channel": "Aktivasi acara", "period": "Hari-H", "reach": 2400, "impressions": 3200 },
-    { "channel": "Aktivasi acara", "period": "Pasca-acara", "reach": 600, "impressions": 900 },
-    { "channel": "Mitra & komunitas", "period": "Pra-acara", "reach": 1300, "impressions": 1800 },
-    { "channel": "Mitra & komunitas", "period": "Hari-H", "reach": 1900, "impressions": 2700 },
-    { "channel": "Mitra & komunitas", "period": "Pasca-acara", "reach": 1100, "impressions": 1600 }
-  ],
-  "engagement": [
-    { "channel": "Instagram", "period": "Pra-acara", "interactions": 280 },
-    { "channel": "Instagram", "period": "Hari-H", "interactions": 510 },
-    { "channel": "Instagram", "period": "Pasca-acara", "interactions": 390 },
-    { "channel": "Aktivasi acara", "period": "Pra-acara", "interactions": 35 },
-    { "channel": "Aktivasi acara", "period": "Hari-H", "interactions": 324 },
-    { "channel": "Aktivasi acara", "period": "Pasca-acara", "interactions": 52 },
-    { "channel": "Mitra & komunitas", "period": "Pra-acara", "interactions": 92 },
-    { "channel": "Mitra & komunitas", "period": "Hari-H", "interactions": 120 },
-    { "channel": "Mitra & komunitas", "period": "Pasca-acara", "interactions": 57 }
-  ],
-  "activities": [
-    { "period": "Pra-acara", "date": "Sebelum acara", "title": "Kenalkan race timing", "description": "Konten pengantar tentang teknologi dan pengalaman lomba.", "channel": "Instagram", "icon": "01" },
-    { "period": "Hari-H", "date": "Hari pelaksanaan", "title": "Hadir di garis start & finish", "description": "Dokumentasi sistem timing dan interaksi dengan peserta.", "channel": "Aktivasi acara", "icon": "02" },
-    { "period": "Pasca-acara", "date": "Setelah acara", "title": "Bagikan momen & hasil", "description": "Cerita pasca-event dan ajakan untuk terhubung.", "channel": "Mitra & komunitas", "icon": "03" }
-  ],
+  "periodLabel": "Google Search Console · 1–27 Oktober 2026",
+  "isIllustrative": false,
+  "searchPerformance": {
+    "eventDate": "2026-10-18",
+    "source": "Google Search Console",
+    "pre": {
+      "label": "Pra-acara",
+      "dateRange": "1–17 Oktober 2026",
+      "days": 17,
+      "clicks": 132,
+      "impressions": 13864,
+      "ctr": 0.95,
+      "position": 5.93,
+      "devices": [
+        { "device": "Desktop", "clicks": 73, "impressions": 5781, "ctr": 1.26, "position": 5.8 },
+        { "device": "Mobile", "clicks": 56, "impressions": 7992, "ctr": 0.7, "position": 5.99 },
+        { "device": "Tablet", "clicks": 3, "impressions": 91, "ctr": 3.3, "position": 9.25 }
+      ],
+      "topQueries": [
+        { "query": "rfid", "clicks": 15, "impressions": 3277, "ctr": 0.46, "position": 4.18 },
+        { "query": "rfid total solution", "clicks": 12, "impressions": 20, "ctr": 60, "position": 1 },
+        { "query": "rfid adalah", "clicks": 4, "impressions": 1921, "ctr": 0.21, "position": 4.75 },
+        { "query": "rfid tag", "clicks": 3, "impressions": 191, "ctr": 1.57, "position": 6.65 },
+        { "query": "sensor rfid", "clicks": 2, "impressions": 82, "ctr": 2.44, "position": 2.57 }
+      ],
+      "topPages": [
+        { "page": "https://rfidtotalsolution.com/pengertian-rfid-jenis-dan-fungsinya/", "clicks": 41, "impressions": 9166, "ctr": 0.45, "position": 4.45 },
+        { "page": "https://rfidtotalsolution.com/", "clicks": 20, "impressions": 382, "ctr": 5.24, "position": 9.66 },
+        { "page": "https://rfidtotalsolution.com/berbagai-bentuk-tag-rfid-dan-kegunaannya/", "clicks": 14, "impressions": 1473, "ctr": 0.95, "position": 5.74 },
+        { "page": "https://rfidtotalsolution.com/aplikasi-rfid-pada-sistem-absensi-sekolah/", "clicks": 9, "impressions": 260, "ctr": 3.46, "position": 6.52 },
+        { "page": "https://rfidtotalsolution.com/solution/rfid-for-race-timing-system/", "clicks": 9, "impressions": 133, "ctr": 6.77, "position": 8.08 }
+      ]
+    },
+    "post": {
+      "label": "Pasca-acara",
+      "dateRange": "18–27 Oktober 2026",
+      "days": 10,
+      "clicks": 62,
+      "impressions": 7837,
+      "ctr": 0.79,
+      "position": 5.45,
+      "devices": [
+        { "device": "Desktop", "clicks": 39, "impressions": 3377, "ctr": 1.15, "position": 5.23 },
+        { "device": "Mobile", "clicks": 22, "impressions": 4407, "ctr": 0.5, "position": 5.62 },
+        { "device": "Tablet", "clicks": 1, "impressions": 53, "ctr": 1.89, "position": 6.85 }
+      ],
+      "topQueries": [
+        { "query": "rfid total solution", "clicks": 9, "impressions": 11, "ctr": 81.82, "position": 1 },
+        { "query": "rfid", "clicks": 6, "impressions": 1748, "ctr": 0.34, "position": 3.64 },
+        { "query": "rfid adalah", "clicks": 2, "impressions": 1084, "ctr": 0.18, "position": 4.19 },
+        { "query": "fungsi rfid", "clicks": 2, "impressions": 28, "ctr": 7.14, "position": 8.93 },
+        { "query": "rfid itu apa", "clicks": 1, "impressions": 142, "ctr": 0.70, "position": 3.70 }
+      ],
+      "topPages": [
+        { "page": "https://rfidtotalsolution.com/pengertian-rfid-jenis-dan-fungsinya/", "clicks": 18, "impressions": 5000, "ctr": 0.36, "position": 3.95 },
+        { "page": "https://rfidtotalsolution.com/", "clicks": 17, "impressions": 169, "ctr": 10.06, "position": 6.33 },
+        { "page": "https://rfidtotalsolution.com/berbagai-bentuk-tag-rfid-dan-kegunaannya/", "clicks": 6, "impressions": 787, "ctr": 0.76, "position": 6.13 },
+        { "page": "https://rfidtotalsolution.com/aplikasi-rfid-pada-sistem-absensi-sekolah/", "clicks": 4, "impressions": 130, "ctr": 3.08, "position": 6.62 },
+        { "page": "https://rfidtotalsolution.com/penggunaan-rfid-di-rumah-sakit/", "clicks": 3, "impressions": 65, "ctr": 4.62, "position": 4.42 }
+      ]
+    },
+    "notes": [
+      "Pra-acara: 1–17 Oktober (17 hari); pasca-acara: 18–27 Oktober (10 hari), mengikuti dua ekspor yang diberikan.",
+      "Total Search Console: 194 klik, 21.701 tayangan, CTR 0,89%, posisi rata-rata 5,76 pada rentang 1–27 Oktober.",
+      "Periode pasca mencakup 18 Oktober, hari acara; perbandingan bukan pengukuran dampak kausal acara.",
+      "CTR di tiap periode adalah rasio klik terhadap tayangan dari ekspor; klik/tayangan harian pada grafik merupakan rerata per hari.",
+      "CTR total properti dihitung dari total klik ÷ total tayangan; posisi rata-rata total dibobotkan berdasarkan tayangan harian Search Console.",
+      "File agregat kueri dan halaman adalah daftar teratas, bukan seluruh aktivitas; jumlah klik antar-tabel tidak mewakili total properti."
+    ]
+  },
   "evaluation": {
     "people": [
       { "label": "Penjelasan tentang RFID", "status": "Perlu diperjelas", "note": "Catatan: penjelasan dinilai kurang sederhana dan kurang menjelaskan cara kerja RFID." },
@@ -49,38 +85,5 @@
       { "label": "Materi visual di area acara", "status": "Perlu ditinjau", "note": "Catatan menyebut background RFID kecil dan banner; tulisan lanjutan pada catatan banner kurang terbaca." }
     ]
   },
-  "nextSteps": [
-    { "number": "01", "title": "Ukur brand recall", "description": "Bandingkan awareness sebelum dan sesudah event." },
-    { "number": "02", "title": "Optimalkan CTA", "description": "Hubungkan interaksi ke landing page atau kontak sales." },
-    { "number": "03", "title": "Rawat komunitas", "description": "Lanjutkan konten dan follow-up setelah race." }
-  ],
-  "sources": ["Insight media sosial", "Log aktivitas acara"],
-  "periods": ["Pra-acara", "Hari-H", "Pasca-acara"],
-  "accountComparison": {
-    "eventDate": "2026-10-18",
-    "pre": {
-      "label": "Pra-acara",
-      "dateRange": "1–18 Oktober 2026",
-      "days": 18,
-      "views": 34939,
-      "accountsReached": 17614,
-      "nonFollowerShare": 93.8,
-      "netFollows": 16,
-      "profileVisits": 159,
-      "bioLinkTaps": 12,
-      "interactionsByContent": 28
-    },
-    "post": {
-      "label": "Pasca-acara",
-      "dateRange": "19–27 Oktober 2026",
-      "days": 9,
-      "views": 25922,
-      "accountsReached": 13570,
-      "nonFollowerShare": 93.4,
-      "netFollows": 11,
-      "profileVisits": 126,
-      "bioLinkTaps": 7,
-      "interactionsByContent": 45
-    }
-  }
+  "sources": ["Google Search Console · Performance on Search (ekspor 1–17 dan 18–27 Oktober 2026)", "Catatan evaluasi SDM dan acara" ]
 }

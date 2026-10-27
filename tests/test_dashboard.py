@@ -6,70 +6,67 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class DashboardSmokeTests(unittest.TestCase):
-    def test_data_file_has_event_identity_and_placeholder_values(self):
+    def test_data_file_contains_actual_search_console_period_data(self):
         data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
         self.assertEqual(data["event"], "ITB Fun Run 2026")
         self.assertEqual(data["brand"], "RFID Total Solution")
-        self.assertTrue(data["isIllustrative"])
-        self.assertTrue(all(kpi["value"] is None or data["isIllustrative"] for kpi in data["kpis"]))
+        self.assertFalse(data["isIllustrative"])
+        self.assertEqual(data["searchPerformance"]["pre"]["clicks"], 132)
+        self.assertEqual(data["searchPerformance"]["pre"]["impressions"], 13864)
+        self.assertEqual(data["searchPerformance"]["post"]["clicks"], 62)
+        self.assertEqual(data["searchPerformance"]["post"]["impressions"], 7837)
+        self.assertTrue(any("Total Search Console: 194 klik, 21.701 tayangan, CTR 0,89%, posisi rata-rata 5,76" in note for note in data["searchPerformance"]["notes"]))
+        self.assertEqual(data["searchPerformance"]["pre"]["days"], 17)
+        self.assertEqual(data["searchPerformance"]["post"]["days"], 10)
+        self.assertEqual(data["searchPerformance"]["pre"]["topPages"][0]["clicks"], 41)
+        self.assertEqual(data["searchPerformance"]["post"]["topPages"][0]["clicks"], 18)
 
-    def test_report_focuses_on_awareness_and_engagement_not_leads(self):
+    def test_report_uses_website_search_performance_instead_of_illustrative_social_sections(self):
         data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertEqual([kpi["id"] for kpi in data["kpis"]], ["reach", "engagement", "participation"])
-        self.assertNotIn("Leads terkumpul", json.dumps(data, ensure_ascii=False))
-        self.assertNotIn("Rekap leads", json.dumps(data, ensure_ascii=False))
-        self.assertNotIn("leads", html.lower())
+        self.assertEqual(data["searchPerformance"]["source"], "Google Search Console")
+        self.assertIn('id="search-performance"', html)
+        self.assertNotIn('id="awareness-title"', html)
+        self.assertNotIn('id="engagement-title"', html)
+        self.assertNotIn('id="account-comparison"', html)
+        self.assertNotIn('id="activity-line"', html)
+        self.assertNotIn('id="next-grid"', html)
 
-    def test_account_comparison_reports_neutral_pre_and_post_event_insights(self):
+    def test_search_console_report_replaces_illustrative_dashboard_sections(self):
         data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        comparison = data["accountComparison"]
-        self.assertEqual(comparison["eventDate"], "2026-10-18")
-        self.assertEqual(comparison["pre"]["views"], 34939)
-        self.assertEqual(comparison["post"]["views"], 25922)
-        self.assertEqual(round(comparison["pre"]["views"] / comparison["pre"]["days"]), 1941)
-        self.assertEqual(round(comparison["post"]["views"] / comparison["post"]["days"]), 2880)
-        self.assertEqual(round(comparison["pre"]["interactionsByContent"] / comparison["pre"]["days"], 1), 1.6)
-        self.assertEqual(round(comparison["post"]["interactionsByContent"] / comparison["post"]["days"], 1), 5)
-        self.assertEqual(comparison["pre"]["interactionsByContent"], 28)
-        self.assertEqual(comparison["post"]["interactionsByContent"], 45)
-        self.assertIn('id="account-comparison"', html)
-        self.assertIn('id="comparison-chart"', html)
-        self.assertIn('id="comparison-table"', html)
-        self.assertIn("rerata harian", html.lower())
-        self.assertIn("data-tooltip", html)
-        self.assertIn("function comparisonChartGrid(rows, pre, post)", html)
-        self.assertIn("function comparisonMetric(label, key, pre, post)", html)
-        self.assertIn("bandingkan bar hanya di dalam kartu yang sama", html)
-        self.assertNotIn("function comparisonTicks(max)", html)
+        search = data["searchPerformance"]
+        self.assertEqual(search["pre"]["clicks"], 132)
+        self.assertEqual(search["pre"]["impressions"], 13864)
+        self.assertEqual(search["post"]["clicks"], 62)
+        self.assertEqual(search["post"]["impressions"], 7837)
+        self.assertEqual(search["pre"]["days"], 17)
+        self.assertEqual(search["post"]["days"], 10)
+        self.assertIn('id="search-performance"', html)
+        self.assertIn('aria-label="Legenda perbandingan periode"', html)
+        self.assertIn('Pra-acara', html)
+        self.assertIn('Pasca-acara', html)
+        for table_id in ("search-query-pre-table", "search-query-post-table", "search-page-pre-table", "search-page-post-table"):
+            self.assertIn(f'id="{table_id}"', html)
+        self.assertNotIn('id="illustration-notice"', html)
+        self.assertNotIn('id="period-filter"', html)
+        self.assertNotIn('id="kpi-grid"', html)
+        self.assertNotIn('id="awareness-chart"', html)
+        self.assertNotIn('id="comparison-chart"', html)
+        self.assertNotIn('id="activity-line"', html)
+        self.assertNotIn('id="next-grid"', html)
+        self.assertFalse(data["isIllustrative"])
 
-    def test_evaluation_is_split_into_people_and_event(self):
-        data = json.loads((ROOT / "data.json").read_text(encoding="utf-8"))
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertEqual(set(data["evaluation"].keys()), {"people", "event"})
-        self.assertTrue(any("rfid" in item["label"].lower() for item in data["evaluation"]["people"]))
-        self.assertTrue(any("backup" in item["label"].lower() for item in data["evaluation"]["people"]))
-        self.assertTrue(any("qr" in item["label"].lower() for item in data["evaluation"]["event"]))
-        self.assertTrue(any("subtitle" in item["label"].lower() for item in data["evaluation"]["event"]))
-        self.assertTrue(all(item["status"] != "Belum dievaluasi" for group in data["evaluation"].values() for item in group))
-        self.assertIn('id="people-evaluation"', html)
-        self.assertIn('id="event-evaluation"', html)
-        self.assertLess(html.index('aria-label="Evaluasi SDM dan acara"'), html.index('id="awareness-title"'))
-        self.assertNotIn("Yang terlihat berhasil", html)
-        self.assertNotIn("Peluang berikutnya", html)
-
-    def test_page_exposes_filters_charts_table_and_placeholder_notice(self):
+    def test_page_exposes_search_report_and_loads_dashboard_data(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for expected in (
-            'id="period-filter"',
-            'id="channel-filter"',
-            'id="awareness-chart"',
-            'id="engagement-chart"',
-            'id="data-table"',
             "data.json",
-            "Data ilustrasi untuk contoh tampilan.",
-            "[...new Set(data.periods)]",
+            "renderSearchPerformance",
+            "Performa website di Google Search",
+            'id="search-query-pre-table"',
+            'id="search-query-post-table"',
+            'id="search-page-pre-table"',
+            'id="search-page-post-table"',
             "$('page-title').textContent = data.event",
         ):
             self.assertIn(expected, html)

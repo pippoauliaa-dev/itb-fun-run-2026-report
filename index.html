@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f7f4">
   <meta name="description" content="Report interaktif aktivitas marketing RFID Total Solution pada ITB Fun Run 2026.">
-  <title>ITB Fun Run 2026 — RFID Total Solution</title>
+  <title>ITB Fun Run 2026 - RFID Total Solution</title>
   <style>
     :root {
       color-scheme: light;
@@ -59,7 +59,58 @@
     .kpi-value { margin: 19px 0 6px; font-size: 36px; font-weight: 690; letter-spacing: -.06em; line-height: 1; }
     .kpi-foot { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; }
     .kpi-delta { color: var(--green-dark); font-weight: 700; }
+    .search-report { margin-top: 14px; padding-bottom: 20px; }
+    .search-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 16px 20px 0; }
+    .search-kpi { padding: 14px; border: 1px solid var(--border); border-radius: 11px; }
+    .search-kpi-total { grid-column: 1 / -1; }
+    .search-kpi-total .search-kpi-periods { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .search-kpi > span:first-child { display: block; color: var(--secondary); font-size: 11px; }
+    .search-kpi strong { display: block; margin: 4px 0 8px; font-size: clamp(19px, 2vw, 27px); font-variant-numeric: tabular-nums; }
+    .search-kpi-periods { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+    .search-kpi-period { min-width: 0; padding: 8px; border-radius: 8px; background: var(--surface-soft); }
+    .search-kpi-period strong { display: block; margin: 0; font-size: clamp(17px, 1.8vw, 23px); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .search-kpi-period small { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; }
+    .search-kpi-hint { display: block; margin-top: 6px; color: var(--muted); font-size: 9px; }
+    .search-chart { padding: 12px 20px 4px; }
+    .search-chart svg { display: block; width: 100%; height: auto; }
+    .search-chart svg.search-performance-chart { width: min(100%, 900px); margin: 0 auto; }
+    .search-chart text { fill: var(--muted); font-family: inherit; font-size: 10px; }
+    .search-chart .search-gridline { stroke: var(--grid); stroke-width: 1; }
+    .search-chart .search-pre { fill: var(--green); }
+    .search-chart .search-post { fill: var(--blue); }
+    .search-chart .search-value { fill: var(--secondary); font-size: 10px; font-variant-numeric: tabular-nums; }
+    .search-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 12px 20px 0; }
+    .search-table-card { min-width: 0; padding: 14px; border: 1px solid var(--border); border-radius: 11px; }
+    .search-table-card h3 { margin: 0 0 9px; font-size: 13px; }
+    .search-period-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .search-period-table h4 { margin: 4px 0; color: var(--secondary); font-size: 10px; }
+    .search-period-table .search-table { table-layout: fixed; }
+    .search-period-table th:first-child, .search-period-table td:first-child { width: 58%; }
+    .search-period-table th:not(:first-child), .search-period-table td:not(:first-child) { width: 21%; }
+    .search-device-card { margin: 12px 20px 0; }
+    .search-table { min-width: 0; width: 100%; }
+    .search-table td:first-child { max-width: 260px; overflow-wrap: anywhere; }
+    .search-table th small, .device-comparison span { display: block; color: var(--muted); font-size: 9px; }
+    .device-comparison span:first-child { color: var(--ink); font-size: 11px; font-weight: 650; }
+    .search-table a { color: var(--green-dark); text-decoration: none; }
+    .search-table a:hover { text-decoration: underline; }
+    .search-notes { margin: 12px 20px 0; color: var(--secondary); font-size: 10px; line-height: 1.6; }
+    .search-notes li { margin: 3px 0; }
     .main-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, .9fr); gap: 14px; margin-top: 14px; }
+    .hero-note { display: none; }
+    .hero { grid-template-columns: 1fr; padding-bottom: 20px; }
+    .hero .eyebrow { display: none; }
+    .hero h1 { font-size: clamp(32px, 4vw, 46px); }
+    .hero h1 br { display: none; }
+    .hero-sub { margin-top: 8px; }
+    .notice { margin-bottom: 14px; }
+    .search-report { margin-top: 0; }
+    .search-kpi strong { font-size: clamp(17px, 1.8vw, 24px); white-space: nowrap; }
+    .search-chart .search-gridline { stroke: var(--grid); }
+    .search-chart .search-pre, .search-chart .search-post { rx: 4px; }
+    .search-table { font-size: 11px; }
+    .search-table td, .search-table th { padding: 8px 6px; }
+    .footer { margin-top: 14px; }
     .card { min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; box-shadow: var(--shadow); }
     .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 20px 21px 0; }
     .card h2 { margin: 0; font-size: 15px; letter-spacing: -.025em; }
@@ -165,6 +216,19 @@
       .filter-label, .filter-count { display: none; }
       .filter-row select { flex: 1; min-width: 0; }
       .kpi-grid { gap: 9px; }
+      .search-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 12px 12px 0; gap: 8px; }
+      .search-kpi { padding: 11px; }
+      .search-kpi-total .search-kpi-periods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .search-kpi-period strong { font-size: 17px; }
+      .search-chart { padding-right: 8px; padding-left: 8px; }
+      .search-chart svg.search-performance-chart { width: 100%; }
+      .search-metric-label { font-size: 8px !important; }
+      .search-tables { grid-template-columns: 1fr; padding: 10px 12px 0; gap: 9px; }
+      .search-period-tables { grid-template-columns: 1fr; }
+      .search-table-card { overflow-x: auto; }
+      .search-table { min-width: 440px; }
+      .search-notes { margin-right: 12px; margin-left: 12px; }
+      .search-device-card { margin-right: 12px; margin-left: 12px; overflow-x: auto; }
       .kpi { min-height: 135px; padding: 14px; border-radius: 12px; }
       .kpi-top { font-size: 10px; }
       .kpi-icon { width: 26px; height: 26px; }
@@ -203,30 +267,24 @@
       <div>
         <p class="eyebrow">Event marketing · 2026</p>
         <h1 id="page-title">ITB Fun Run<br>2026</h1>
-        <p class="hero-sub">Evaluasi aktivitas marketing <span aria-hidden="true">·</span> <strong id="event-role">Race Timing System Partner</strong></p>
+        <p class="hero-sub">Analisis performa website <span aria-hidden="true">·</span> <strong>Google Search Console</strong></p>
       </div>
       <aside class="hero-note"><b>Tujuan aktivitas</b><span>Bangun awareness dan engagement melalui pengalaman race timing di event.</span></aside>
     </section>
 
-    <div class="notice" id="illustration-notice" role="status"><span class="notice-icon" aria-hidden="true">ⓘ</span><span><strong>Data ilustrasi untuk contoh tampilan.</strong> KPI dan grafik kanal di bawah masih contoh; perbandingan Insights akun merupakan data aktual dari tangkapan layar.</span></div>
+    <div class="notice" id="search-context-notice" role="note"><span class="notice-icon" aria-hidden="true">ⓘ</span><span>Perbandingan performa website di Google Search Console. Periode pasca mencakup hari acara, 18 Oktober; data menunjukkan perubahan bersamaan, bukan bukti dampak langsung acara.</span></div>
 
-    <div class="filter-row" aria-label="Filter report">
-      <span class="filter-label">Tampilkan</span>
-      <label class="sr-only" for="period-filter">Filter periode</label>
-      <select id="period-filter" aria-label="Filter periode"><option value="Semua periode">Semua periode</option></select>
-      <label class="sr-only" for="channel-filter">Filter kanal</label>
-      <select id="channel-filter" aria-label="Filter kanal"><option value="Semua kanal">Semua kanal</option></select>
-      <span class="filters-spacer"></span><span class="filter-count" id="filter-count">Semua aktivitas</span>
-    </div>
-
-    <section class="kpi-grid" id="kpi-grid" aria-label="Ringkasan hasil"></section>
-
-    <section class="card comparison-card" id="account-comparison" aria-labelledby="comparison-title">
-      <div class="card-head"><div><h2 id="comparison-title">Perbandingan Instagram sebelum dan sesudah acara</h2><p class="card-sub" id="comparison-periods"></p></div></div>
-      <div class="comparison-controls"><div class="comparison-legend" aria-label="Legenda periode"><span><i style="background:var(--green)"></i>Pra-acara</span><span><i style="background:var(--blue)"></i>Pasca-acara</span></div><div class="comparison-actions"><button class="comparison-table-toggle" type="button" id="comparison-chart-toggle" aria-expanded="true">Sembunyikan grafik</button><button class="comparison-table-toggle" type="button" id="comparison-table-toggle" aria-expanded="false">Lihat tabel data</button></div></div>
-      <div class="comparison-chart-wrap visible" id="comparison-chart-wrap"><div class="comparison-chart" id="comparison-chart" role="group" aria-label="Perbandingan rerata harian akun sebelum dan setelah acara"></div></div>
-      <div class="comparison-table-wrap" id="comparison-table"></div>
-      <p class="comparison-note" id="comparison-note"></p>
+    <section class="card search-report" id="search-performance" aria-labelledby="search-title">
+      <div class="card-head"><div><h2 id="search-title">Performa website di Google Search</h2><p class="card-sub" id="search-periods"></p></div></div>
+      <div class="search-kpis" id="search-kpis" aria-label="Ringkasan performa penelusuran"></div>
+      <div class="search-chart" id="search-chart" aria-label="Perbandingan performa pra dan pasca acara"></div>
+      <div class="legend" aria-label="Legenda perbandingan periode"><span class="legend-item"><span class="swatch" style="background:var(--green)" aria-hidden="true"></span>Pra-acara</span><span class="legend-item"><span class="swatch" style="background:var(--blue)" aria-hidden="true"></span>Pasca-acara</span></div>
+      <div class="search-tables">
+        <article class="search-table-card"><h3>Kueri teratas</h3><div class="search-period-tables"><section class="search-period-table"><h4>Pra-acara · 1–17 Okt</h4><div id="search-query-pre-table"></div></section><section class="search-period-table"><h4>Pasca-acara · 18–27 Okt</h4><div id="search-query-post-table"></div></section></div></article>
+        <article class="search-table-card"><h3>Halaman teratas</h3><div class="search-period-tables"><section class="search-period-table"><h4>Pra-acara · 1–17 Okt</h4><div id="search-page-pre-table"></div></section><section class="search-period-table"><h4>Pasca-acara · 18–27 Okt</h4><div id="search-page-post-table"></div></section></div></article>
+      </div>
+      <article class="search-table-card search-device-card"><h3>Perangkat · perbandingan klik dan tayangan</h3><div id="search-device-table"></div></article>
+      <ul class="search-notes" id="search-notes"></ul>
     </section>
 
     <section class="insight-grid" aria-label="Evaluasi SDM dan acara">
@@ -234,30 +292,7 @@
       <article class="card insight"><h2 class="insight-title"><span aria-hidden="true">◎</span> Evaluasi acara</h2><p class="card-sub">Kesiapan, pelaksanaan, dan hasil operasional</p><ul class="evaluation-list" id="event-evaluation"></ul></article>
     </section>
 
-    <section class="main-grid" aria-label="Grafik awareness dan engagement">
-      <article class="card" aria-labelledby="awareness-title">
-        <div class="card-head"><div><h2 id="awareness-title">Awareness</h2><p class="card-sub">Jangkauan dan impresi per kanal</p></div><div class="chart-toggle" role="group" aria-label="Jenis metrik awareness"><button type="button" data-metric="reach" aria-pressed="true">Jangkauan</button><button type="button" data-metric="impressions" aria-pressed="false">Impresi</button></div></div>
-        <div class="chart-body" id="awareness-chart"></div><div class="data-table-wrap" id="awareness-table"></div>
-        <div class="legend" id="awareness-legend" aria-label="Legenda kanal"></div>
-      </article>
-      <article class="card" aria-labelledby="engagement-title">
-        <div class="card-head"><div><h2 id="engagement-title">Engagement</h2><p class="card-sub">Interaksi berdasarkan kanal dan periode</p></div><div class="chart-toggle" role="group" aria-label="Tampilan data engagement"><button type="button" data-view="chart" aria-pressed="true">Grafik</button><button type="button" data-view="table" aria-pressed="false">Tabel</button></div></div>
-        <div class="chart-body" id="engagement-chart"></div><div class="data-table-wrap" id="data-table"></div>
-        <div class="legend" id="engagement-legend" aria-label="Legenda kanal"></div>
-      </article>
-    </section>
-
-    <section class="card timeline-card" aria-labelledby="activity-title">
-      <div class="card-head"><div><h2 id="activity-title">Aktivitas sepanjang event</h2><p class="card-sub">Dari pemanasan komunikasi hingga tindak lanjut</p></div></div>
-      <div class="activity-line" id="activity-line"></div>
-    </section>
-
-    <section class="card next-card" aria-labelledby="next-title">
-      <div class="next-head"><h2 id="next-title">Langkah selanjutnya</h2><p>Rekomendasi untuk event berikutnya</p></div>
-      <div class="next-grid" id="next-grid"></div>
-    </section>
-
-    <footer class="footer"><span id="source-note">Sumber: insight media sosial · log aktivitas acara</span><span>Awareness menunjukkan paparan; brand recall perlu diukur terpisah.</span></footer>
+    <footer class="footer"><span id="source-note">Sumber: Google Search Console · ekspor performa penelusuran</span><span>CTR = klik ÷ tayangan; posisi adalah rata-rata dan angka lebih kecil menunjukkan peringkat lebih tinggi.</span></footer>
   </main>
   <div class="tooltip" id="chart-tooltip" role="status" aria-live="polite"></div>
 
@@ -267,8 +302,6 @@
       const $ = (id) => document.getElementById(id);
       const number = new Intl.NumberFormat('id-ID');
       let data;
-      let metric = 'reach';
-      let view = 'chart';
 
       const text = (tag, value, className) => {
         const node = document.createElement(tag);
@@ -276,40 +309,161 @@
         node.textContent = value ?? '';
         return node;
       };
-      const unique = (rows, field) => [...new Set(rows.map((row) => row[field]))];
-      const selectedPeriod = () => $('period-filter').value;
-      const selectedChannel = () => $('channel-filter').value;
-      const matches = (row) => (selectedPeriod() === 'Semua periode' || row.period === selectedPeriod()) && (selectedChannel() === 'Semua kanal' || row.channel === selectedChannel());
-      const label = (value) => selectedPeriod() === 'Semua periode' ? value : selectedPeriod();
-      const visibleRows = (rows) => rows.filter(matches);
-
-      function renderKpis() {
-        const grid = $('kpi-grid');
+      function renderSearchKpis(pre, post) {
+        const items = [
+          { label: 'Klik', key: 'clicks', value: (period) => period.clicks / period.days, digits: 1 },
+          { label: 'Tayangan', key: 'impressions', value: (period) => period.impressions / period.days, digits: 0 },
+          { label: 'CTR', key: 'ctr', value: (period) => period.ctr, digits: 2, unit: '%' },
+          { label: 'Posisi rata-rata', key: 'position', value: (period) => period.position, digits: 2 }
+        ];
+        const grid = $('search-kpis');
         grid.replaceChildren();
-        data.kpis.forEach((kpi) => {
-          const card = text('article', '', 'kpi card');
-          const top = text('div', '', 'kpi-top');
-          top.append(text('span', kpi.label), text('span', kpi.icon || '•', 'kpi-icon'));
-          const value = text('div', kpi.value == null ? '—' : number.format(kpi.value), 'kpi-value');
-          const foot = text('div', '', 'kpi-foot');
-          if (kpi.change != null) foot.append(text('span', `↑ ${kpi.change}%`, 'kpi-delta'));
-          foot.append(text('span', kpi.changeLabel || kpi.unit || ''));
-          card.append(top, value, foot);
+        items.forEach((item) => {
+          const card = text('article', '', 'search-kpi');
+          const preValue = item.value(pre);
+          const postValue = item.value(post);
+          card.append(text('span', item.label));
+          const values = text('div', '', 'search-kpi-periods');
+          const preDisplay = text('div', '', 'search-kpi-period');
+          preDisplay.append(text('strong', `${number.format(Number(preValue.toFixed(item.digits)))}${item.unit || ''}`), text('small', 'Pra-acara'));
+          const postDisplay = text('div', '', 'search-kpi-period');
+          postDisplay.append(text('strong', `${number.format(Number(postValue.toFixed(item.digits)))}${item.unit || ''}`), text('small', 'Pasca-acara'));
+          values.append(preDisplay, postDisplay);
+          card.append(values);
+          if (item.key === 'position') {
+            const hint = text('span', 'Posisi lebih rendah lebih baik');
+            hint.className = 'search-kpi-hint';
+            card.append(hint);
+          }
           grid.append(card);
         });
       }
 
-      function renderSelects() {
-        const periods = $('period-filter');
-        const channels = $('channel-filter');
-        const oldPeriod = periods.value;
-        const oldChannel = channels.value;
-        periods.replaceChildren(new Option('Semua periode', 'Semua periode'));
-        [...new Set(data.periods)].forEach((period) => periods.add(new Option(period, period)));
-        channels.replaceChildren(new Option('Semua kanal', 'Semua kanal'));
-        unique(data.awareness, 'channel').forEach((channel) => channels.add(new Option(channel, channel)));
-        periods.value = [...periods.options].some((o) => o.value === oldPeriod) ? oldPeriod : 'Semua periode';
-        channels.value = [...channels.options].some((o) => o.value === oldChannel) ? oldChannel : 'Semua kanal';
+      function renderSearchChart(pre, post) {
+        const metrics = [
+          { label: 'Klik / hari', key: 'clicks', daily: true },
+          { label: 'Tayangan / hari', key: 'impressions', daily: true },
+          { label: 'CTR', key: 'ctr', daily: false },
+          { label: 'Posisi', key: 'position', daily: false, reverse: true }
+        ];
+        const width = 720;
+        const top = 12;
+        const rowHeight = 48;
+        const height = top + rowHeight * metrics.length;
+        const left = 110;
+        const plotWidth = 465;
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        svg.setAttribute('class', 'search-performance-chart');
+        svg.setAttribute('role', 'img');
+        svg.setAttribute('aria-label', 'Perbandingan performa pencarian Google pra dan pasca acara');
+        metrics.forEach((metric, index) => {
+          const y = top + index * rowHeight;
+          const values = [pre, post].map((period) => metric.daily ? period[metric.key] / period.days : period[metric.key]);
+          const scale = Math.max(...values, 0.01) * 1.12;
+          const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          title.setAttribute('x', left - 12);
+          title.setAttribute('y', y + 17);
+          title.setAttribute('text-anchor', 'end');
+          title.setAttribute('class', 'search-metric-label');
+          title.textContent = metric.label;
+          svg.append(title);
+          const baseline = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          baseline.setAttribute('class', 'search-gridline');
+          baseline.setAttribute('x1', left);
+          baseline.setAttribute('y1', y + 4);
+          baseline.setAttribute('x2', left + plotWidth);
+          baseline.setAttribute('y2', y + 4);
+          svg.append(baseline);
+          [[values[0], pre, 'Pra-acara', 'search-pre'], [values[1], post, 'Pasca-acara', 'search-post']].forEach(([value, period, periodLabel, series], seriesIndex) => {
+            const relativeValue = metric.reverse ? scale - value : value;
+            const barWidth = Math.max(relativeValue > 0 ? 2 : 0, relativeValue / scale * plotWidth);
+            const formattedValue = Number(value.toFixed(metric.key === 'ctr' || metric.key === 'position' ? 2 : value < 10 ? 1 : 0));
+            const formatted = `${number.format(formattedValue)}${metric.key === 'ctr' ? '%' : ''}`;
+            const total = metric.daily ? ` · ${number.format(period[metric.key])} total` : '';
+            const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            bar.setAttribute('class', series);
+            bar.setAttribute('x', left);
+            bar.setAttribute('y', y + 8 + seriesIndex * 14);
+            bar.setAttribute('width', barWidth);
+            bar.setAttribute('height', 10);
+            bar.setAttribute('rx', 4);
+            bar.setAttribute('data-tooltip', `${metric.label} · ${periodLabel}: ${formatted}${total}${metric.key === 'position' ? ' · posisi lebih rendah lebih baik' : ''}`);
+            svg.append(bar);
+            const valueLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            valueLabel.setAttribute('class', 'search-value');
+            valueLabel.setAttribute('x', left + plotWidth + 9);
+            valueLabel.setAttribute('y', y + 16 + seriesIndex * 14);
+            valueLabel.textContent = formatted;
+            svg.append(valueLabel);
+          });
+        });
+        $('search-chart').replaceChildren(svg);
+        $('search-chart').onpointerover = showTooltip;
+        $('search-chart').onpointerleave = () => $('chart-tooltip').classList.remove('visible');
+      }
+
+      function renderSearchTable(target, rows, type) {
+        const table = document.createElement('table');
+        table.className = 'search-table';
+        const header = document.createElement('tr');
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        if (type === 'device') {
+          const totals = ['Klik', 'Tayangan', 'CTR', 'Posisi'];
+          header.append(text('th', 'Perangkat'));
+          totals.forEach((label) => {
+            const th = text('th', '');
+            th.append(text('span', label), text('small', 'Pra / pasca'));
+            header.append(th);
+          });
+          const formatDeviceMetric = (item, key) => key === 'ctr' ? `${number.format(item.ctr)}%` : number.format(item[key]);
+          rows.forEach((row) => {
+            const tr = document.createElement('tr');
+            tr.append(text('td', row.device));
+            ['clicks', 'impressions', 'ctr', 'position'].forEach((key) => {
+              const cell = text('td', '', 'device-comparison');
+              cell.append(text('span', formatDeviceMetric(row, key)), text('span', formatDeviceMetric(row.post, key)));
+              tr.append(cell);
+            });
+            tbody.append(tr);
+          });
+        } else {
+          [type === 'query' ? 'Kueri' : 'Halaman', 'Klik', 'Tayangan'].forEach((value) => header.append(text('th', value)));
+          rows.forEach((row) => {
+            const tr = document.createElement('tr');
+            const first = document.createElement('td');
+            if (type === 'page') {
+              const link = document.createElement('a');
+              link.href = row.page;
+              link.target = '_blank';
+              link.rel = 'noopener noreferrer';
+              const pathname = new URL(row.page).pathname;
+              link.textContent = pathname === '/' ? 'Beranda' : decodeURIComponent(pathname.split('/').filter(Boolean).at(-1).replaceAll('-', ' '));
+              link.title = row.page;
+              first.append(link);
+            } else first.textContent = row.query;
+            tr.append(first, text('td', number.format(row.clicks)), text('td', number.format(row.impressions)));
+            tbody.append(tr);
+          });
+        }
+        thead.append(header);
+        table.append(thead, tbody);
+        $(target).replaceChildren(table);
+      }
+
+      function renderSearchPerformance() {
+        const report = data.searchPerformance;
+        const { pre, post } = report;
+        $('search-periods').textContent = `Pra-acara ${pre.dateRange} (${pre.days} hari) dibanding pasca-acara ${post.dateRange} (${post.days} hari).`;
+        renderSearchKpis(pre, post);
+        renderSearchChart(pre, post);
+        renderSearchTable('search-query-pre-table', pre.topQueries, 'query');
+        renderSearchTable('search-query-post-table', post.topQueries, 'query');
+        renderSearchTable('search-page-pre-table', pre.topPages, 'page');
+        renderSearchTable('search-page-post-table', post.topPages, 'page');
+        renderSearchTable('search-device-table', pre.devices.map((device, index) => ({ ...device, post: post.devices[index] })), 'device');
+        $('search-notes').replaceChildren(...report.notes.map((note) => text('li', note)));
       }
 
       function renderLegend(target, channels) {
@@ -597,18 +751,10 @@
       }
 
       function render() {
-        renderKpis();
-        renderAwareness();
-        renderEngagement();
-        renderActivities();
-        renderAccountComparison();
+        renderSearchPerformance();
         renderEvaluation('people-evaluation', data.evaluation.people || []);
         renderEvaluation('event-evaluation', data.evaluation.event || []);
-        renderNext();
-        const period = selectedPeriod();
-        const channel = selectedChannel();
-        $('filter-count').textContent = [period === 'Semua periode' ? '' : period, channel === 'Semua kanal' ? '' : channel].filter(Boolean).join(' · ') || 'Semua aktivitas';
-        $('period-label').textContent = data.periodLabel || 'Ringkasan aktivitas marketing';
+        $('period-label').textContent = data.periodLabel || 'Google Search Console';
       }
 
       async function init() {
@@ -616,27 +762,11 @@
           const response = await fetch('./data.json');
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           data = await response.json();
-          if (!data.event || !Array.isArray(data.kpis)) throw new Error('Format data.json tidak sesuai');
+          if (!data.event || !data.searchPerformance) throw new Error('Format data.json tidak sesuai');
           $('page-title').textContent = data.event;
           document.title = `${data.event} — ${data.brand}`;
-          $('event-role').textContent = data.role || 'Race Timing System Partner';
-          $('illustration-notice').hidden = !data.isIllustrative;
           $('source-note').textContent = `Sumber: ${(data.sources || []).join(' · ') || 'belum dicantumkan'} · ${data.periodLabel || 'periode data belum dicantumkan'}`;
-          renderSelects();
           render();
-          $('period-filter').addEventListener('change', render);
-          $('channel-filter').addEventListener('change', render);
-          document.querySelectorAll('[data-metric]').forEach((button) => button.addEventListener('click', () => {
-            metric = button.dataset.metric;
-            document.querySelectorAll('[data-metric]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-            renderAwareness();
-          }));
-          document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
-            view = button.dataset.view;
-            document.querySelectorAll('[data-view]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-            renderAwareness();
-            renderEngagement();
-          }));
         } catch (error) {
           document.querySelector('main').replaceChildren(text('section', `Report tidak dapat dimuat. Periksa data.json. (${error.message})`, 'card empty'));
           console.error(error);
